@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mediumButton = document.getElementById('medium-button');
     const hardButton = document.getElementById('hard-button');
     const restartButton = document.getElementById('restart-button');
+    const exitButton = document.getElementById('exit-button');
     const gameBoard = document.getElementById('game-board');
     const timerElement = document.getElementById('timer');
     const scoreElement = document.getElementById('score');
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const allImages = [
         'edgar.png', 'gale.png', 'pam.webp', 'piper.png', 'poco.png', 'sandy.png', 'spike.png', 'squike.jpeg',
-        'amber.png', 'bea.jpeg', 'colt.png', 'dinamike.png', 'griff.webp', 'leon.png', 'meg.png', 'nita.web'
+        'amber.png', 'bea.jpeg', 'colt.png', 'dinamike.png', 'griff.webp', 'leon.png', 'meg.png', 'nita.webp'
     ];
 
     let game;
@@ -30,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         endScreen.classList.add('hidden');
         startScreen.classList.remove('hidden');
     });
+
+    exitButton.addEventListener('click', exitGame);
 
     function startGame(pairCount) {
         const selectedImages = allImages.slice(0, pairCount);
@@ -102,4 +105,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const remainingSeconds = seconds % 60;
         return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
+
+    function exitGame() {
+        if (confirm('¿Estás seguro de que quieres salir del juego?')) {
+            if (timerWorker) {
+                timerWorker.postMessage('stop');
+            }
+            
+            resetScore();
+            
+            gameScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+            
+            gameBoard.innerHTML = '';
+            
+            timerElement.textContent = '00:00';
+            scoreElement.textContent = '0';
+        }
+    }
 });
+
+
