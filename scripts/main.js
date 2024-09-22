@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
     const endScreen = document.getElementById('end-screen');
-    const startButton = document.getElementById('start-button');
+    const easyButton = document.getElementById('easy-button');
+    const mediumButton = document.getElementById('medium-button');
+    const hardButton = document.getElementById('hard-button');
     const restartButton = document.getElementById('restart-button');
     const gameBoard = document.getElementById('game-board');
     const timerElement = document.getElementById('timer');
@@ -13,35 +15,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalTimeElement = document.getElementById('final-time');
     const finalScoreElement = document.getElementById('final-score');
 
-    const images = [
-        'edgar.png', 'gale.png', 'pam.webp', 'piper.png',
-        'poco.png', 'sandy.png', 'spike.png', 'squike.jpeg'
+    const allImages = [
+        'edgar.png', 'gale.png', 'pam.webp', 'piper.png', 'poco.png', 'sandy.png', 'spike.png', 'squike.jpeg',
+        'amber.png', 'bea.jpeg', 'colt.png', 'dinamike.png', 'griff.webp', 'leon.png', 'meg.png', 'nita.web'
     ];
 
     let game;
     let timerWorker;
 
-    startButton.addEventListener('click', startGame);
-    restartButton.addEventListener('click', startGame);
-
-    function startGame() {
-        startScreen.classList.add('hidden');
+    easyButton.addEventListener('click', () => startGame(8));
+    mediumButton.addEventListener('click', () => startGame(12));
+    hardButton.addEventListener('click', () => startGame(16));
+    restartButton.addEventListener('click', () => {
         endScreen.classList.add('hidden');
+        startScreen.classList.remove('hidden');
+    });
+
+    function startGame(pairCount) {
+        const selectedImages = allImages.slice(0, pairCount);
+        startScreen.classList.add('hidden');
         gameScreen.classList.remove('hidden');
         
-        game = initGame(images);
+        game = initGame(selectedImages);
 
-        // Iniciar el worker para mezclar las cartas
         const shuffleWorker = new Worker('scripts/workers/shuffleWorker.js');
-        shuffleWorker.postMessage(images);
+        shuffleWorker.postMessage(selectedImages);
         
         shuffleWorker.onmessage = (e) => {
             game.cards = e.data;
             
-            // Limpiar el tablero existente
             gameBoard.innerHTML = '';
             
-            // Crear las cartas mezcladas
+            const columns = Math.ceil(Math.sqrt(game.cards.length));
+            gameBoard.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+            
             game.cards.forEach((image, index) => {
                 const card = document.createElement('div');
                 card.classList.add('card');
@@ -58,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         game.score = score;
                         updateUI(game, gameBoard, timerElement, scoreElement);
                         
-                        // Verificar si el juego ha terminado después de actualizar la UI
                         if (isGameComplete(game)) {
                             endGame();
                         }
@@ -66,14 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 gameBoard.appendChild(card);
             });
-
-            // Resetear la puntuación al inicio de un nuevo juego
             resetScore();
 
-            // Actualizar la UI inicial
             updateUI(game, gameBoard, timerElement, scoreElement);
 
-            // Iniciar el worker para el temporizador
             timerWorker = new Worker('scripts/workers/timerWorker.js');
             timerWorker.postMessage('start');
             timerWorker.onmessage = (e) => {

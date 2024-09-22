@@ -8,9 +8,7 @@ function shuffleArray(array) {
 
 self.onmessage = function(e) {
     let cards = e.data;
-    // Duplicamos las cartas para tener pares
     cards = [...cards, ...cards];
-    // Mezclamos el array
     const shuffledCards = shuffleArray(cards);
     self.postMessage(shuffledCards);
 };

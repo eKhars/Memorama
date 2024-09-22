@@ -30,7 +30,6 @@ function checkMatch(game) {
         scoreWorker.postMessage('MATCH');
         game.flippedCards = [];
         
-        // Solo verificamos si el juego ha terminado, no hacemos nada aquí
         if (isGameComplete(game)) {
             console.log('Juego completado');
         }
@@ -60,5 +59,3 @@ export function getScore(callback) {
 export function isGameComplete(game) {
     return game.matchedPairs.length / 2 === game.totalPairs;
 }
-
-// Removemos la función endGame de aquí

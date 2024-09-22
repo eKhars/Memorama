@@ -8,7 +8,7 @@ self.onmessage = function(e) {
             score += 100;
             break;
         case 'MISMATCH':
-            score = Math.max(0, score - 10);  // Evita puntuación negativa
+            score = Math.max(0, score - 10);  
             break;
         case 'RESET':
             score = 0;
