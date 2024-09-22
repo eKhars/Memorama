@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Memorama</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div id="start-screen" class="screen">
+        <h1>Memorama</h1>
+        <p>¡Encuentra todos los pares de cartas!</p>
+        <button id="start-button">Iniciar Juego</button>
+    </div>
+    <div id="game-screen" class="screen hidden">
+        <div class="game-container">
+            <h1>Memorama</h1>
+            <div id="game-board"></div>
+            <div class="game-info">
+                <p>Tiempo: <span id="timer">00:00</span></p>
+                <p>Puntuación: <span id="score">0</span></p>
+            </div>
+        </div>
+    </div>
+    <div id="end-screen" class="screen hidden">
+        <h1>¡Juego Terminado!</h1>
+        <p>Tiempo: <span id="final-time"></span></p>
+        <p>Puntuación final: <span id="final-score"></span></p>
+        <button id="restart-button">Jugar de nuevo</button>
+    </div>
+    <script src="scripts/main.js" type="module"></script>
+</body>
+</html>
