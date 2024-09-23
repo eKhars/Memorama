@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalScoreElement = document.getElementById('final-score');
 
     const allImages = [
-        'edgar.png', 'gale.png', 'pam.webp', 'piper.png', 'poco.png', 'sandy.png', 'spike.png', 'squike.jpeg',
-        'amber.png', 'bea.jpeg', 'colt.png', 'dinamike.png', 'griff.webp', 'leon.png', 'meg.png', 'nita.webp'
+        'edgar.png', 'gale.png', 'pam.webp', 'piper.png', 'poco.png', 'sandy.png', 'spike.png', 'squike.png',
+        'amber.png', 'bea.png', 'colt.png', 'dinamike.png', 'griff.webp', 'leon.png', 'meg.png', 'nita.webp'
     ];
 
     let game;
